@@ -167,5 +167,5 @@ void loop(void) {
 //  } else {
 //    Serial.println(" - Big squeeze");
 //  }
-  
+  delay(50);
 }
