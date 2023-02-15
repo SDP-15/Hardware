@@ -2,7 +2,6 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 from PIL import Image
 
-
 class Visualizer:
     def __init__(self):
         self.sensors = []
@@ -58,11 +57,13 @@ class Visualizer:
         self.ax.imshow(self.image)
         plt.ion()
         plt.show()
+        plt.draw()
+        plt.pause(1)
 
     def update_values(self, data):
-        for sensor_id, _, reading in data:
-            color = "gray" if reading < 500 else "r"
-            self.sensors[sensor_id].set(edgecolor=color, facecolor=color)
-        self.sensors
+        for sensor_id, reading in data:
+            color = "gray" if int(reading) < 500 else "r"
+            idx = int(sensor_id)
+            self.sensors[idx].set(edgecolor=color, facecolor=color)
         plt.draw()
         plt.pause(0.01)
