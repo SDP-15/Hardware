@@ -1,13 +1,12 @@
 import serial
 from objprint import op
 import mysql.connector
-
 import time
 import re
 from datetime import datetime
 import sys
 
-ser = serial.Serial(r'/dev/ttyACM0')
+ser = serial.Serial("COM7",9600)
 server = 'sql8.freemysqlhosting.net'
 database = 'sql8596986'
 username = 'sql8596986'
@@ -35,11 +34,12 @@ while True:
         t = time.time()
         readable_t = datetime.utcfromtimestamp(t).strftime('%Y-%m-%d %H:%M:%S')
         print(
-            f"INSERT INTO pressure_sensor_data VALUES (\"{readable_t}\", \"({d[0]})\", \"({d[1]})\");")
+            f"INSERT INTO pressure_sensor_data (time, sensor_id, data) VALUES (\"{readable_t}\", \"{d[0]}\", \"{d[1]}\");")
         cursor.execute(
-            f"INSERT INTO pressure_sensor_data VALUES (%s, %s);", (readable_t, str(d)))
+            f"INSERT INTO pressure_sensor_data (time, sensor_id, data) VALUES (\"{readable_t}\", \"{d[0]}\", \"{d[1]}\");")
         connection.commit()
     except Exception as e:
         print(e)
         pass
+    
 
