@@ -1,5 +1,4 @@
 import serial
-from objprint import op
 import mysql.connector
 import time
 import re
@@ -27,19 +26,28 @@ if connection.is_connected():
 else:
     sys.exit("Can't connect to db")
 
+values = dict()
+
 while True:
     try:
         s = ser.readline().decode().strip()
         d = re.search(r'reading(\d) = (\d+)', s).groups()  # Sensor Id, pressure
         t = time.time()
         readable_t = datetime.utcfromtimestamp(t).strftime('%Y-%m-%d %H:%M:%S')
-        print(
-            f"INSERT INTO pressure_sensor_data (time, sensor_id, data) VALUES (\"{readable_t}\", \"{d[0]}\", \"{d[1]}\");")
-        cursor.execute(
-            f"INSERT INTO pressure_sensor_data (time, sensor_id, data) VALUES (\"{readable_t}\", \"{d[0]}\", \"{d[1]}\");")
-        connection.commit()
+        values[d[0]] = (d[0], t, d[1])
     except Exception as e:
         print(e)
         pass
+
+    # Only push data once we have collected one datapoint per sensor
+    if len(values.keys) == 8:
+        for _, value in values.items():
+            string= f"INSERT INTO table (sensor_id, time_of_reading, reading) VALUES({value[0]}, \"{value[1]}\", {value[2]}) ON DUPLICATE KEY UPDATE time_of_reading=\"{value[1]}\", reading={value[2]};"
+            print(string)
+            cursor.execute(string)
+
+        connection.commit()
+        values = dict()
+        time.sleep(1)
     
 
