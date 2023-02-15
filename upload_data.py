@@ -37,7 +37,7 @@ while True:
         pass
 
     # Only push data once we have collected one datapoint per sensor
-    if len(values.keys) == 8:
+    if len(values.keys()) == 8:
         for _, value in values.items():
             string = f'INSERT INTO sensor_data (sensor_id, time_of_reading, reading) VALUES({value[0]}, "{value[1]}", {value[2]}) ON DUPLICATE KEY UPDATE time_of_reading="{value[1]}", reading={value[2]};'
             print(string)
