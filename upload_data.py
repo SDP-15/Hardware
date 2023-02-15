@@ -4,6 +4,7 @@ import time
 import re
 from datetime import datetime
 import sys
+import visualise
 
 ser = serial.Serial("COM7", 9600)
 server = "sql8.freemysqlhosting.net"
@@ -25,6 +26,9 @@ else:
 
 values = dict()
 
+should_vis = False
+if should_vis:
+    vis = visualise.Visualizer()
 while True:
     try:
         s = ser.readline().decode().strip()
@@ -32,6 +36,8 @@ while True:
         t = time.time()
         readable_t = datetime.utcfromtimestamp(t).strftime("%Y-%m-%d %H:%M:%S")
         values[d[0]] = (d[0], t, d[1])
+        if should_vis:
+            vis.update_values([(d[0], t, d[1])])
     except Exception as e:
         print(e)
         pass
