@@ -29,15 +29,27 @@ values = dict()
 should_vis = False
 if should_vis:
     vis = visualise.Visualizer()
+    values = []
 while True:
+    if should_vis:
+        try:
+            s = ser.readline().decode().strip()
+            d = re.search(r"reading(\d) = (\d+)", s).groups()  # Sensor Id, pressure
+            values.append((d[0], d[1]))
+        except Exception as e:
+            print(e)
+            pass  
+        if (len(values) == 8):
+            vis.update_values(values)
+            values = []
+        continue
+
     try:
         s = ser.readline().decode().strip()
         d = re.search(r"reading(\d) = (\d+)", s).groups()  # Sensor Id, pressure
         t = time.time()
         readable_t = datetime.utcfromtimestamp(t).strftime("%Y-%m-%d %H:%M:%S")
         values[d[0]] = (d[0], t, d[1])
-        if should_vis:
-            vis.update_values([(d[0], t, d[1])])
     except Exception as e:
         print(e)
         pass
@@ -50,5 +62,5 @@ while True:
             cursor.execute(string)
 
         connection.commit()
-        values = dict()
         time.sleep(1)
+        values = dict()
