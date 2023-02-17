@@ -12,6 +12,11 @@ class Visualizer:
         )
         self.sensors.append(
             patches.Rectangle(
+                (355, 260), 50, 50, linewidth=1, edgecolor="gray", facecolor="gray"
+            )
+        )
+        self.sensors.append(
+            patches.Rectangle(
                 (430, 100), 50, 50, linewidth=1, edgecolor="gray", facecolor="gray"
             )
         )
@@ -22,7 +27,12 @@ class Visualizer:
         )
         self.sensors.append(
             patches.Rectangle(
-                (355, 260), 50, 50, linewidth=1, edgecolor="gray", facecolor="gray"
+                (450, 340), 50, 50, linewidth=1, edgecolor="gray", facecolor="gray"
+            )
+        )
+        self.sensors.append(
+            patches.Rectangle(
+                (430, 410), 50, 50, linewidth=1, edgecolor="gray", facecolor="gray"
             )
         )
         self.sensors.append(
@@ -32,17 +42,7 @@ class Visualizer:
         )
         self.sensors.append(
             patches.Rectangle(
-                (450, 340), 50, 50, linewidth=1, edgecolor="gray", facecolor="gray"
-            )
-        )
-        self.sensors.append(
-            patches.Rectangle(
                 (280, 410), 50, 50, linewidth=1, edgecolor="gray", facecolor="gray"
-            )
-        )
-        self.sensors.append(
-            patches.Rectangle(
-                (430, 410), 50, 50, linewidth=1, edgecolor="gray", facecolor="gray"
             )
         )
         self.image = Image.open("officechair.png")
@@ -62,7 +62,7 @@ class Visualizer:
 
     def update_values(self, data):
         for sensor_id, reading in data:
-            color = "gray" if int(reading) < 500 else "r"
+            color = "gray" if int(reading) < 300 else "r"
             idx = int(sensor_id)
             self.sensors[idx].set(edgecolor=color, facecolor=color)
         plt.draw()

@@ -26,7 +26,7 @@ else:
 
 values = dict()
 
-should_vis = False
+should_vis = True
 if should_vis:
     vis = visualise.Visualizer()
     values = []
