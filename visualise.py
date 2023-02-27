@@ -3,17 +3,13 @@ import matplotlib.patches as patches
 from PIL import Image
 from typing import List, Tuple
 
+
 class Visualizer:
     def __init__(self):
         self.sensors = []
         self.sensors.append(
             patches.Rectangle(
                 (280, 100), 50, 50, linewidth=1, edgecolor="gray", facecolor="gray"
-            )
-        )
-        self.sensors.append(
-            patches.Rectangle(
-                (355, 260), 50, 50, linewidth=1, edgecolor="gray", facecolor="gray"
             )
         )
         self.sensors.append(
@@ -28,12 +24,7 @@ class Visualizer:
         )
         self.sensors.append(
             patches.Rectangle(
-                (450, 340), 50, 50, linewidth=1, edgecolor="gray", facecolor="gray"
-            )
-        )
-        self.sensors.append(
-            patches.Rectangle(
-                (430, 410), 50, 50, linewidth=1, edgecolor="gray", facecolor="gray"
+                (355, 260), 50, 50, linewidth=1, edgecolor="gray", facecolor="gray"
             )
         )
         self.sensors.append(
@@ -43,7 +34,17 @@ class Visualizer:
         )
         self.sensors.append(
             patches.Rectangle(
+                (450, 340), 50, 50, linewidth=1, edgecolor="gray", facecolor="gray"
+            )
+        )
+        self.sensors.append(
+            patches.Rectangle(
                 (280, 410), 50, 50, linewidth=1, edgecolor="gray", facecolor="gray"
+            )
+        )
+        self.sensors.append(
+            patches.Rectangle(
+                (430, 410), 50, 50, linewidth=1, edgecolor="gray", facecolor="gray"
             )
         )
         self.image = Image.open("officechair.png")
