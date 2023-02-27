@@ -66,10 +66,10 @@ def score_posture(data: Dict[str, Tuple[int, int, str]]) -> int:
     score = 1
     if not sitting:
         return score
-    if not data_formatted[seat_front_right]:  # Left leg crossed over right
+    if not data_formatted[seat_front_left]:  # Left leg crossed over right
         score -= 0.25
         print("Left leg crossed over right leg.")
-    if not data_formatted[seat_front_left]:  # Right leg crossed over left
+    if not data_formatted[seat_front_right]:  # Right leg crossed over left
         score -= 0.25
         print("Right leg crossed over left leg.")
     if (
