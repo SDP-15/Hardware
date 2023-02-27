@@ -2,26 +2,11 @@ import serial
 import mysql.connector
 import time
 import re
-from datetime import datetime
 import sys
 import visualise
 
 # Global Variables
-ser = serial.Serial("COM7", 9600)
-server = "sql8.freemysqlhosting.net"
-database = "sql8596986"
-username = "sql8596986"
-password = "zzRR3mNM8j"
-
-connection = mysql.connector.connect(
-    host=server, database=database, user=username, password=password
-)
-if connection.is_connected():
-    db_Info = connection.get_server_info()
-    print("Connected to MySQL Server version ", db_Info)
-    cursor = connection.cursor()
-else:
-    sys.exit("Can't connect to db")
+ser = serial.Serial("COM7", 9600)  # "/dev/ttyACM0" for dice machine
 
 
 def getData() -> dict:
@@ -38,7 +23,7 @@ def getData() -> dict:
                 r"reading(\d) = (\d+)", string
             ).groups()  # Sensor Id, pressure
             time_stamp = time.time()
-            data[sensor_id] = (sensor_id, sensor_reading, time_stamp)
+            data[sensor_id] = (int(sensor_id), int(sensor_reading), time_stamp)
         except Exception as e:
             print(e)
             pass
@@ -60,6 +45,21 @@ def upload_data_to_db():
     """
     Upload the current sensor readings to the data base. Uploads once a second.
     """
+    server = "sql8.freemysqlhosting.net"
+    database = "sql8596986"
+    username = "sql8596986"
+    password = "zzRR3mNM8j"
+
+    connection = mysql.connector.connect(
+        host=server, database=database, user=username, password=password
+    )
+    if connection.is_connected():
+        db_Info = connection.get_server_info()
+        print("Connected to MySQL Server version ", db_Info)
+        cursor = connection.cursor()
+    else:
+        sys.exit("Can't connect to db")
+
     while True:
         data = getData()
         for _, value in data.items():
