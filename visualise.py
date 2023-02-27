@@ -61,14 +61,14 @@ class Visualizer:
         plt.draw()
         plt.pause(1)
 
-    def update_values(self, data: List[Tuple[int, int]]):
+    def update_values(self, data: List[Tuple[int, bool]]):
         """
         Updates the values that are used to visualise.
 
         :param data: List of sensor id, sensor reading pairs.
         """
-        for sensor_id, reading in data:
-            color = "gray" if int(reading) < 300 else "r"
+        for sensor_id, active in data:
+            color = "r" if active else "gray"
             self.sensors[sensor_id].set(edgecolor=color, facecolor=color)
         plt.draw()
         plt.pause(0.01)
