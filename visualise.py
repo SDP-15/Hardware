@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 from PIL import Image
-
+from typing import List, Tuple
 
 class Visualizer:
     def __init__(self):
@@ -61,7 +61,7 @@ class Visualizer:
         plt.draw()
         plt.pause(1)
 
-    def update_values(self, data: list[tuple[int, int]]):
+    def update_values(self, data: List[Tuple[int, int]]):
         """
         Updates the values that are used to visualise.
 
