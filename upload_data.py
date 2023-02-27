@@ -6,6 +6,7 @@ from datetime import datetime
 import sys
 import visualise
 
+# Global Variables
 ser = serial.Serial("COM7", 9600)
 server = "sql8.freemysqlhosting.net"
 database = "sql8596986"
@@ -19,48 +20,59 @@ if connection.is_connected():
     db_Info = connection.get_server_info()
     print("Connected to MySQL Server version ", db_Info)
     cursor = connection.cursor()
-    query = """SELECT * FROM sensor_data"""
-
 else:
     sys.exit("Can't connect to db")
 
-values = dict()
 
-should_vis = True
-if should_vis:
-    vis = visualise.Visualizer()
-    values = []
-while True:
-    if should_vis:
+def getData() -> dict:
+    """
+    Returns the latest reading for each sensor in a dictionary. Can be accessed by the id of the sensor.
+
+    :return: dictionary with sensor id's as the keys and (sensor_id, sensor_reading, time_stamp) as the corresponding value
+    """
+    data = dict()
+    while len(data) < 8:
         try:
-            s = ser.readline().decode().strip()
-            d = re.search(r"reading(\d) = (\d+)", s).groups()  # Sensor Id, pressure
-            values.append((d[0], d[1]))
+            string = ser.readline().decode().strip()
+            sensor_id, sensor_reading = re.search(
+                r"reading(\d) = (\d+)", string
+            ).groups()  # Sensor Id, pressure
+            time_stamp = time.time()
+            data[sensor_id] = (sensor_id, sensor_reading, time_stamp)
         except Exception as e:
             print(e)
-            pass  
-        if (len(values) == 8):
-            vis.update_values(values)
-            values = []
-        continue
+            pass
+    return data
 
-    try:
-        s = ser.readline().decode().strip()
-        d = re.search(r"reading(\d) = (\d+)", s).groups()  # Sensor Id, pressure
-        t = time.time()
-        readable_t = datetime.utcfromtimestamp(t).strftime("%Y-%m-%d %H:%M:%S")
-        values[d[0]] = (d[0], t, d[1])
-    except Exception as e:
-        print(e)
-        pass
 
-    # Only push data once we have collected one datapoint per sensor
-    if len(values.keys()) == 8:
-        for _, value in values.items():
-            string = f'INSERT INTO sensor_data (sensor_id, time_of_reading, reading) VALUES({value[0]}, "{value[1]}", {value[2]}) ON DUPLICATE KEY UPDATE time_of_reading="{value[1]}", reading={value[2]};'
+def visualise_readings():
+    """
+    Visualizes the current sensor readings.
+    """
+    vis = visualise.Visualizer()
+    while True:
+        data = getData()
+        data_correct_format = [(value[0], value[1]) for _, value in data.items()]
+        vis.update_values(data_correct_format)
+
+
+def upload_data_to_db():
+    """
+    Upload the current sensor readings to the data base. Uploads once a second.
+    """
+    while True:
+        data = getData()
+        for _, value in data.items():
+            string = f'INSERT INTO sensor_data (sensor_id, time_of_reading, reading) VALUES({value[0]}, "{value[2]}", {value[1]}) ON DUPLICATE KEY UPDATE time_of_reading="{value[1]}", reading={value[2]};'
             print(string)
             cursor.execute(string)
 
         connection.commit()
         time.sleep(1)
-        values = dict()
+
+
+should_vis = True
+if should_vis:
+    visualise_readings()
+else:
+    upload_data_to_db()
