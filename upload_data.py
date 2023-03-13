@@ -3,11 +3,12 @@ import mysql.connector
 import time
 import re
 import sys
-import visualise
+import database
 from typing import Dict, Tuple
 
 # Global Variables
 ser = serial.Serial("COM7", 9600)  # "/dev/ttyACM0" for dice machine
+db = database.DB()
 
 def getData() -> dict:
     """
@@ -34,29 +35,12 @@ def upload_data_to_db():
     """
     Upload the current sensor readings to the data base. Uploads once a second.
     """
-    server = "sql8.freemysqlhosting.net"
-    database = "sql8596986"
-    username = "sql8596986"
-    password = "zzRR3mNM8j"
-
-    connection = mysql.connector.connect(
-        host=server, database=database, user=username, password=password
-    )
-    if connection.is_connected():
-        db_Info = connection.get_server_info()
-        print("Connected to MySQL Server version ", db_Info)
-        cursor = connection.cursor()
-    else:
-        sys.exit("Can't connect to db")
-
     while True:
         data = getData()
         for _, value in data.items():
             string = f'INSERT INTO sensor_data (sensor_id, time_of_reading, reading) VALUES({value[0]}, "{value[2]}", {value[1]}) ON DUPLICATE KEY UPDATE time_of_reading="{value[1]}", reading={value[2]};'
             print(string)
-            cursor.execute(string)
-
-        connection.commit()
+            db.executeQuery(string)
         time.sleep(1)
 
 
