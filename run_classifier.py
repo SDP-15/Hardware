@@ -6,12 +6,14 @@ import numpy as np
 import manual_classifier
 from typing import List
 import visualise
+import database
+import time
 
 # Global Variables
 ser = serial.Serial("/dev/ttyACM0", 9600)  # "/dev/ttyACM0" for dice machine
 active_threshold = 300
 vis = visualise.Visualizer()
-
+db = database.DB()
 
 def getData() -> List[int]:
     """
@@ -48,6 +50,7 @@ def visualise_reading(data: List[int]):
     vis.update_values(data_correct_format)
 
 
+upload_data = False
 run_neural_network = False
 if run_neural_network:
     model = tf.keras.models.load_model("models/posture-model.h5")
@@ -56,7 +59,12 @@ while True:
     data = getData()
     if run_neural_network:
         score = model(np.array([data])).numpy()[0][0]
+        reason = -1
     else:
-        score = manual_classifier.score_posture(data, active_threshold)
+        score, reason = manual_classifier.score_posture(data, active_threshold)
     print("Score: " + score)
     visualise_reading(data)
+    timestamp = time.time()
+    if upload_data:
+        query = f"INSERT INTO score (score, timestamp, reason) VALUES({score}, {timestamp}, {reason});"
+        db.executeQuery(query)
