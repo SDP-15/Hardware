@@ -8,19 +8,6 @@ from typing import Dict, Tuple
 
 # Global Variables
 ser = serial.Serial("COM7", 9600)  # "/dev/ttyACM0" for dice machine
-# We consider a sensor to be active if the reading is more than or equal to 300
-active_threshold = 300
-
-# Sensor ids
-back_top_left = 0
-back_top_right = 1
-back_middle_middle = 2
-back_bottom_middle = 3
-seat_back_left = 4
-seat_back_right = 5
-seat_front_left = 6
-seat_front_right = 7
-
 
 def getData() -> dict:
     """
@@ -41,64 +28,6 @@ def getData() -> dict:
             print(e)
             pass
     return data
-
-
-def visualise_readings():
-    """
-    Visualizes the current sensor readings.
-    """
-    vis = visualise.Visualizer()
-    while True:
-        data = getData()
-        data_correct_format = [
-            (value[0], value[1] >= active_threshold) for _, value in data.items()
-        ]
-        vis.update_values(data_correct_format)
-        score = score_posture(data)
-        print(score)
-
-
-def score_posture(data: Dict[str, Tuple[int, int, str]]) -> int:
-    data_formatted = {
-        value[0]: value[1] >= active_threshold for _, value in data.items()
-    }
-    sitting = is_sitting(data_formatted)
-    score = 1
-    if not sitting:
-        return score
-    if not data_formatted[seat_front_left]:  # Left leg crossed over right
-        score -= 0.25
-        print("Left leg crossed over right leg.")
-    if not data_formatted[seat_front_right]:  # Right leg crossed over left
-        score -= 0.25
-        print("Right leg crossed over left leg.")
-    if (
-        not data_formatted[seat_back_left]
-        or not data_formatted[seat_back_right]
-        or not data_formatted[back_bottom_middle]
-    ):  # Slouching
-        score -= 0.25
-        print("You are slouching.")
-    elif (
-        not data_formatted[back_top_left] or not data_formatted[back_top_right]
-    ):  # Hunching
-        score -= 0.25
-        print("You are hunching forward.")
-    return max(score, 0)  # should not be less than 0
-
-
-def is_sitting(data: Dict[int, bool]) -> bool:
-    """
-    Returns true if we consider someone to be sitting on the chair.
-
-    :param data: dictionary mapping from the sensor id to its reading.
-    """
-    return (
-        data[seat_back_left]
-        or data[seat_back_right]
-        or data[seat_front_left]
-        or data[seat_front_right]
-    )
 
 
 def upload_data_to_db():
@@ -131,8 +60,4 @@ def upload_data_to_db():
         time.sleep(1)
 
 
-should_vis = True
-if should_vis:
-    visualise_readings()
-else:
-    upload_data_to_db()
+upload_data_to_db()

@@ -3,12 +3,17 @@ import re
 import numpy as np
 import tensorflow as tf
 import numpy as np
+import manual_classifier
+from typing import List
+import visualise
 
 # Global Variables
 ser = serial.Serial("/dev/ttyACM0", 9600)  # "/dev/ttyACM0" for dice machine
+active_threshold = 300
+vis = visualise.Visualizer()
 
 
-def getData() -> list:
+def getData() -> List[int]:
     """
     Returns the latest reading for each sensor in a dictionary. Can be accessed by the id of the sensor.
 
@@ -33,7 +38,25 @@ def getData() -> list:
     return ret_dat
 
 
-new_model = tf.keras.models.load_model("models/posture-model.h5")
+def visualise_reading(data: List[int]):
+    """
+    Visualizes the current sensor readings.
+    """
+    data_correct_format = [
+        (idx, value >= active_threshold) for idx, value in enumerate(data)
+    ]
+    vis.update_values(data_correct_format)
+
+
+run_neural_network = False
+if run_neural_network:
+    model = tf.keras.models.load_model("models/posture-model.h5")
+
 while True:
     data = getData()
-    print(new_model(np.array([data])))
+    if run_neural_network:
+        score = model(np.array([data])).numpy()[0][0]
+    else:
+        score = manual_classifier.score_posture(data, active_threshold)
+    print("Score: " + score)
+    visualise_reading(data)
