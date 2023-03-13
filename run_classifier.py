@@ -22,7 +22,7 @@ def getData() -> List[int]:
     :return: dictionary with sensor id's as the keys and (sensor_id, sensor_reading, time_stamp) as the corresponding value
     """
     data = dict()
-    while len(data) < 8:
+    while len(data) < 6:
         try:
             string = ser.readline().decode().strip()
             sensor_id, sensor_reading = re.search(
@@ -34,7 +34,7 @@ def getData() -> List[int]:
 
             pass
     # Initialise with 0's
-    ret_dat = [0, 0, 0, 0, 0, 0, 0, 0]
+    ret_dat = [0, 0, 0, 0, 0, 0]
     for _, value in data.items():
         ret_dat[value[0]] = value[1]
     return ret_dat

@@ -1,10 +1,7 @@
 import serial
-import mysql.connector
 import time
 import re
-import sys
 import database
-from typing import Dict, Tuple
 
 # Global Variables
 ser = serial.Serial("COM7", 9600)  # "/dev/ttyACM0" for dice machine
@@ -17,7 +14,7 @@ def getData() -> dict:
     :return: dictionary with sensor id's as the keys and (sensor_id, sensor_reading, time_stamp) as the corresponding value
     """
     data = dict()
-    while len(data) < 8:
+    while len(data) < 6:
         try:
             string = ser.readline().decode().strip()
             sensor_id, sensor_reading = re.search(

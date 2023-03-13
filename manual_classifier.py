@@ -3,12 +3,10 @@ from typing import List
 # Sensor ids
 back_top_left = 0
 back_top_right = 1
-back_middle_middle = 2
-back_bottom_middle = 3
-seat_back_left = 4
-seat_back_right = 5
-seat_front_left = 6
-seat_front_right = 7
+back_bottom_middle = 2
+seat_back_middle= 3
+seat_front_left = 4
+seat_front_right = 5
 
 
 def score_posture(data: List[int], active_threshold: int) -> int:
@@ -34,8 +32,7 @@ def score_posture(data: List[int], active_threshold: int) -> int:
         reason = 2
         print("Right leg crossed over left leg.")
     elif (
-        not data_formatted[seat_back_left]
-        or not data_formatted[seat_back_right]
+        not data_formatted[seat_back_middle]
         or not data_formatted[back_bottom_middle]
     ):  # Slouching
         score = 0
@@ -57,8 +54,7 @@ def is_sitting(data: List[bool]) -> bool:
     :param data: dictionary mapping from the sensor id to its reading.
     """
     return (
-        data[seat_back_left]
-        or data[seat_back_right]
+        data[seat_back_middle]
         or data[seat_front_left]
         or data[seat_front_right]
     )

@@ -13,7 +13,7 @@ y_train = np.append(good_y_train, bad_y_train, axis=0)
 
 model = tf.keras.models.Sequential(
     [
-        tf.keras.layers.Dense(32, activation="relu", input_dim=8),
+        tf.keras.layers.Dense(32, activation="relu", input_dim=6),
         tf.keras.layers.Dense(64, activation="relu"),
         tf.keras.layers.Dense(1, activation="sigmoid"),  # Output layer
     ]

@@ -14,7 +14,7 @@ def getData() -> list:
     :return: dictionary with sensor id's as the keys and (sensor_id, sensor_reading, time_stamp) as the corresponding value
     """
     data = dict()
-    while len(data) < 8:
+    while len(data) < 6:
         try:
             string = ser.readline().decode().strip()
             sensor_id, sensor_reading = re.search(
@@ -26,7 +26,7 @@ def getData() -> list:
 
             pass
     # Initialise with 0's
-    ret_dat = [0, 0, 0, 0, 0, 0, 0, 0]
+    ret_dat = [0, 0, 0, 0, 0, 0]
     for _, value in data.items():
         ret_dat[value[0]] = value[1]
     return ret_dat
@@ -35,7 +35,7 @@ def getData() -> list:
 # Records around 2 readings a second
 number_of_readings = 100
 
-total_data = np.empty((0, 8), int)
+total_data = np.empty((0, 6), int)
 for i in tqdm(range(number_of_readings)):
     data = getData()
     total_data = np.append(total_data, [data], axis=0)

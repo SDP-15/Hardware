@@ -19,22 +19,12 @@ class Visualizer:
         )
         self.sensors.append(
             patches.Rectangle(
-                (355, 170), 50, 50, linewidth=1, edgecolor="gray", facecolor="gray"
-            )
-        )
-        self.sensors.append(
-            patches.Rectangle(
                 (355, 260), 50, 50, linewidth=1, edgecolor="gray", facecolor="gray"
             )
         )
         self.sensors.append(
             patches.Rectangle(
-                (260, 340), 50, 50, linewidth=1, edgecolor="gray", facecolor="gray"
-            )
-        )
-        self.sensors.append(
-            patches.Rectangle(
-                (450, 340), 50, 50, linewidth=1, edgecolor="gray", facecolor="gray"
+                (355, 340), 50, 50, linewidth=1, edgecolor="gray", facecolor="gray"
             )
         )
         self.sensors.append(
