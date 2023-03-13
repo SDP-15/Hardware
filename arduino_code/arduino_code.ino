@@ -9,8 +9,8 @@
 #define fsrPin5 A5
 
 
-#define fsrPin6 A6
-#define fsrPin7 A7
+// #define fsrPin6 A6
+// #define fsrPin7 A7
 
 
 
@@ -21,136 +21,136 @@ void setup() {
 
 
 void loop(void) {
-  int fsrReading0 = analogRead(fsrPin0);  
+  int back_top_left = analogRead(fsrPin0);  
  
-  Serial.print("Analog reading0 = ");
-  Serial.print(fsrReading0);     // print the raw analog reading
+  Serial.print("back top left = ");
+  Serial.print(back_top_left);     // print the raw analog reading
  
-  if (fsrReading0 < 50) {
+  if (back_top_left < 50) {
     Serial.println(" - No pressure");
-  } else if (fsrReading0 < 500) {
+  } else if (back_top_left < 500) {
     Serial.println(" - Light touch");
-  } else if (fsrReading0 < 700) {
+  } else if (back_top_left < 700) {
     Serial.println(" - Light squeeze");
-  } else if (fsrReading0 < 900) {
+  } else if (back_top_left < 900) {
     Serial.println(" - Medium squeeze");
   } else {
     Serial.println(" - Big squeeze");
   }
   
   
-  int fsrReading1    = analogRead(fsrPin1);  
+  int back_top_right    = analogRead(fsrPin1);  
  
-  Serial.print("Analog reading1 = ");
-  Serial.print(fsrReading1);     // print the raw analog reading
+  Serial.print("back top right = ");
+  Serial.print(back_top_right);     // print the raw analog reading
  
-  if (fsrReading1 < 50) {
+  if (back_top_right < 50) {
     Serial.println(" - No pressure");
-  } else if (fsrReading1 < 500) {
+  } else if (back_top_right < 500) {
     Serial.println(" - Light touch");
-  } else if (fsrReading1 < 700) {
+  } else if (back_top_right < 700) {
     Serial.println(" - Light squeeze");
-  } else if (fsrReading1 < 900) {
+  } else if (back_top_right < 900) {
     Serial.println(" - Medium squeeze");
   } else {
     Serial.println(" - Big squeeze");
   }
-  int fsrReading2    = analogRead(fsrPin2);  
+  int bottom_middle    = analogRead(fsrPin2);  
  
-  Serial.print("Analog reading2 = ");
-  Serial.print(fsrReading2);     // print the raw analog reading
+  Serial.print("bottom middle = ");
+  Serial.print(bottom_middle);     // print the raw analog reading
  
-  if (fsrReading2 < 50) {
+  if (bottom_middle < 50) {
     Serial.println(" - No pressure");
-  } else if (fsrReading2 < 500) {
+  } else if (bottom_middlebottom_middlebottom_middle < 500) {
     Serial.println(" - Light touch");
-  } else if (fsrReading2 < 700) {
+  } else if (bottom_middlebottom_middle < 700) {
     Serial.println(" - Light squeeze");
-  } else if (fsrReading2 < 900) {
+  } else if (bottom_middle < 900) {
     Serial.println(" - Medium squeeze");
   } else {
     Serial.println(" - Big squeeze");
   }
-  int fsrReading3    = analogRead(fsrPin3);  
+  int seat_back_middle    = analogRead(fsrPin3);  
  
-  Serial.print("Analog reading3 = ");
+  Serial.print("seat back middle = ");
   Serial.print(fsrReading3);     // print the raw analog reading
  
-  if (fsrReading3 < 50) {
+  if (seat_back_middle < 50) {
     Serial.println(" - No pressure");
-  } else if (fsrReading3 < 500) {
+  } else if (seat_back_middle < 500) {
     Serial.println(" - Light touch");
-  } else if (fsrReading3 < 700) {
+  } else if (seat_back_middle < 700) {
     Serial.println(" - Light squeeze");
-  } else if (fsrReading3 < 900) {
+  } else if (seat_back_middle < 900) {
     Serial.println(" - Medium squeeze");
   } else {
     Serial.println(" - Big squeeze");
   }
-  int fsrReading4    = analogRead(fsrPin4);  
+  int seat_front_left    = analogRead(fsrPin4);  
  
-  Serial.print("Analog reading4 = ");
-  Serial.print(fsrReading4);     // print the raw analog reading
+  Serial.print("seat front left = ");
+  Serial.print(seat_front_left);     // print the raw analog reading
  
-  if (fsrReading4 < 50) {
+  if (seat_front_left < 50) {
     Serial.println(" - No pressure");
-  } else if (fsrReading4 < 500) {
+  } else if (seat_front_left < 500) {
     Serial.println(" - Light touch");
-  } else if (fsrReading4 < 700) {
+  } else if (seat_front_left < 700) {
     Serial.println(" - Light squeeze");
-  } else if (fsrReading4 < 900) {
+  } else if (seat_front_left < 900) {
     Serial.println(" - Medium squeeze");
   } else {
     Serial.println(" - Big squeeze");
   }
-  int fsrReading5    = analogRead(fsrPin5);  
+  int seat_front_right    = analogRead(fsrPin5);  
  
-  Serial.print("Analog reading5 = ");
-  Serial.print(fsrReading5);     // print the raw analog reading
+  Serial.print("seat front right = ");
+  Serial.print(seat_front_right);     // print the raw analog reading
  
-  if (fsrReading5 < 50) {
+  if (seat_front_right < 50) {
     Serial.println(" - No pressure");
-  } else if (fsrReading5 < 500) {
+  } else if (seat_front_right < 500) {
     Serial.println(" - Light touch");
-  } else if (fsrReading5 < 700) {
+  } else if (seat_front_right < 700) {
     Serial.println(" - Light squeeze");
-  } else if (fsrReading5 < 900) {
+  } else if (seat_front_right < 900) {
     Serial.println(" - Medium squeeze");
   } else {
     Serial.println(" - Big squeeze");
   }
-  int fsrReading6   = analogRead(fsrPin6);  
+//   int fsrReading6   = analogRead(fsrPin6);  
  
-  Serial.print("Analog reading6 = ");
-  Serial.print(fsrReading6);     // print the raw analog reading
+//   Serial.print("Analog reading6 = ");
+//   Serial.print(fsrReading6);     // print the raw analog reading
  
-  if (fsrReading6 < 50) {
-    Serial.println(" - No pressure");
-  } else if (fsrReading6 < 500) {
-    Serial.println(" - Light touch");
-  } else if (fsrReading6 < 700) {
-    Serial.println(" - Light squeeze");
-  } else if (fsrReading6 < 900) {
-    Serial.println(" - Medium squeeze");
-  } else {
-    Serial.println(" - Big squeeze");
-  }
-  int fsrReading7    = analogRead(fsrPin7);  
+//   if (fsrReading6 < 50) {
+//     Serial.println(" - No pressure");
+//   } else if (fsrReading6 < 500) {
+//     Serial.println(" - Light touch");
+//   } else if (fsrReading6 < 700) {
+//     Serial.println(" - Light squeeze");
+//   } else if (fsrReading6 < 900) {
+//     Serial.println(" - Medium squeeze");
+//   } else {
+//     Serial.println(" - Big squeeze");
+//   }
+//   int fsrReading7    = analogRead(fsrPin7);  
  
-  Serial.print("Analog reading7 = ");
-  Serial.print(fsrReading7);     // print the raw analog reading
+//   Serial.print("Analog reading7 = ");
+//   Serial.print(fsrReading7);     // print the raw analog reading
  
-  if (fsrReading7 < 50) {
-    Serial.println(" - No pressure");
-  } else if (fsrReading7 < 500) {
-    Serial.println(" - Light touch");
-  } else if (fsrReading7 < 700) {
-    Serial.println(" - Light squeeze");
-  } else if (fsrReading7 < 900) {
-    Serial.println(" - Medium squeeze");
-  } else {
-    Serial.println(" - Big squeeze");
-  }
+//   if (fsrReading7 < 50) {
+//     Serial.println(" - No pressure");
+//   } else if (fsrReading7 < 500) {
+//     Serial.println(" - Light touch");
+//   } else if (fsrReading7 < 700) {
+//     Serial.println(" - Light squeeze");
+//   } else if (fsrReading7 < 900) {
+//     Serial.println(" - Medium squeeze");
+//   } else {
+//     Serial.println(" - Big squeeze");
+//   }
 //  int fsrReading9    = analogRead(fsrPin9);  
 // 
 //  Serial.print("Analog reading9 = ");
