@@ -23,7 +23,7 @@ void setup() {
 void loop(void) {
   int back_top_left = analogRead(fsrPin0);  
  
-  Serial.print("back top left = ");
+  Serial.print("reading0 = ");
   Serial.print(back_top_left);     // print the raw analog reading
  
   if (back_top_left < 50) {
@@ -41,7 +41,7 @@ void loop(void) {
   
   int back_top_right    = analogRead(fsrPin1);  
  
-  Serial.print("back top right = ");
+  Serial.print("reading1 = ");
   Serial.print(back_top_right);     // print the raw analog reading
  
   if (back_top_right < 50) {
@@ -57,14 +57,14 @@ void loop(void) {
   }
   int bottom_middle    = analogRead(fsrPin2);  
  
-  Serial.print("bottom middle = ");
+  Serial.print("reading2 = ");
   Serial.print(bottom_middle);     // print the raw analog reading
  
   if (bottom_middle < 50) {
     Serial.println(" - No pressure");
-  } else if (bottom_middlebottom_middlebottom_middle < 500) {
+  } else if (bottom_middle < 500) {
     Serial.println(" - Light touch");
-  } else if (bottom_middlebottom_middle < 700) {
+  } else if (bottom_middle < 700) {
     Serial.println(" - Light squeeze");
   } else if (bottom_middle < 900) {
     Serial.println(" - Medium squeeze");
@@ -73,8 +73,8 @@ void loop(void) {
   }
   int seat_back_middle    = analogRead(fsrPin3);  
  
-  Serial.print("seat back middle = ");
-  Serial.print(fsrReading3);     // print the raw analog reading
+  Serial.print("reading3 = ");
+  Serial.print(seat_back_middle);     // print the raw analog reading
  
   if (seat_back_middle < 50) {
     Serial.println(" - No pressure");
@@ -89,7 +89,7 @@ void loop(void) {
   }
   int seat_front_left    = analogRead(fsrPin4);  
  
-  Serial.print("seat front left = ");
+  Serial.print("reading4 = ");
   Serial.print(seat_front_left);     // print the raw analog reading
  
   if (seat_front_left < 50) {
@@ -105,7 +105,7 @@ void loop(void) {
   }
   int seat_front_right    = analogRead(fsrPin5);  
  
-  Serial.print("seat front right = ");
+  Serial.print("reading5 = ");
   Serial.print(seat_front_right);     // print the raw analog reading
  
   if (seat_front_right < 50) {
