@@ -7,13 +7,14 @@ import manual_classifier
 from typing import List
 import visualise
 import database
-import time
+from datetime import datetime
 
 # Global Variables
+db = database.DB()
 ser = serial.Serial("/dev/ttyACM0", 9600)  # "/dev/ttyACM0" for dice machine
 active_threshold = 300
 vis = visualise.Visualizer()
-db = database.DB()
+
 
 def getData() -> List[int]:
     """
@@ -64,7 +65,7 @@ while True:
         score, reason = manual_classifier.score_posture(data, active_threshold)
     print("Score: " + score)
     visualise_reading(data)
-    timestamp = time.time()
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     if upload_data:
-        query = f"INSERT INTO score (score, timestamp, reason) VALUES({score}, {timestamp}, {reason});"
+        query = f"INSERT INTO score (score, timestamp, reason) VALUES({score}, '{timestamp}', {reason});"
         db.executeQuery(query)
