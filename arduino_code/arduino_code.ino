@@ -1,5 +1,7 @@
 
 
+
+
 #define fsrPin0 A0// the FSR and 10K pulldown are connected to a0
 #define fsrPin1 A1
 #define fsrPin2 A2
@@ -11,16 +13,28 @@
 
 // #define fsrPin6 A6
 // #define fsrPin7 A7
+#include<SoftwareSerial.h>
+/*create a object*/
+SoftwareSerial bt(2,3); /*(Rx,Tx)*/
 
 
 
 
 void setup() {
+  bt.begin(9600);
   Serial.begin(9600);
     }
 
 
 void loop(void) {
+  if(bt.available())
+  {
+    Serial.write(bt.read());  
+  }
+  if (Serial.available())
+  {
+    bt.write(Serial.read());
+  }
   int back_top_left = analogRead(fsrPin0);  
  
   Serial.print("reading0 = ");
@@ -119,53 +133,5 @@ void loop(void) {
   } else {
     Serial.println(" - Big squeeze");
   }
-//   int fsrReading6   = analogRead(fsrPin6);  
- 
-//   Serial.print("Analog reading6 = ");
-//   Serial.print(fsrReading6);     // print the raw analog reading
- 
-//   if (fsrReading6 < 50) {
-//     Serial.println(" - No pressure");
-//   } else if (fsrReading6 < 500) {
-//     Serial.println(" - Light touch");
-//   } else if (fsrReading6 < 700) {
-//     Serial.println(" - Light squeeze");
-//   } else if (fsrReading6 < 900) {
-//     Serial.println(" - Medium squeeze");
-//   } else {
-//     Serial.println(" - Big squeeze");
-//   }
-//   int fsrReading7    = analogRead(fsrPin7);  
- 
-//   Serial.print("Analog reading7 = ");
-//   Serial.print(fsrReading7);     // print the raw analog reading
- 
-//   if (fsrReading7 < 50) {
-//     Serial.println(" - No pressure");
-//   } else if (fsrReading7 < 500) {
-//     Serial.println(" - Light touch");
-//   } else if (fsrReading7 < 700) {
-//     Serial.println(" - Light squeeze");
-//   } else if (fsrReading7 < 900) {
-//     Serial.println(" - Medium squeeze");
-//   } else {
-//     Serial.println(" - Big squeeze");
-//   }
-//  int fsrReading9    = analogRead(fsrPin9);  
-// 
-//  Serial.print("Analog reading9 = ");
-//  Serial.print(fsrReading9);     // print the raw analog reading
-// 
-//  if (fsrReading9 < 10) {
-//    Serial.println(" - No pressure");
-//  } else if (fsrReading9 < 500) {
-//    Serial.println(" - Light touch");
-//  } else if (fsrReading9 < 700) {
-//    Serial.println(" - Light squeeze");
-//  } else if (fsrReading9  < 900) {
-//    Serial.println(" - Medium squeeze");
-//  } else {
-//    Serial.println(" - Big squeeze");
-//  }
-  delay(50);
+  
 }
