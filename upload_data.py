@@ -4,7 +4,7 @@ import re
 import database
 
 # Global Variables
-ser = serial.Serial("COM7", 9600)  # "/dev/ttyACM0" for dice machine
+ser = serial.Serial("/dev/tty.HC-05", 9600)  # "/dev/ttyACM0" for dice machine
 db = database.DB()
 
 def getData() -> dict:
